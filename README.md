@@ -2,6 +2,9 @@
 
 1. [Detectron2 Flask API](#detectron2-flask-api)
 2. [Documentation](#documentation)
+    1. [Requirements](#requirements)
+    2. [Installation](#installation)
+    3. [Usage](#usage)
 3. [Contact and references](#contact-and-references)
 4. [License](#license)
 
@@ -13,17 +16,37 @@
 
 # Detectron2 Flask API
 
-**Detectron2 Flask API** - is a simple `Python` written repository that allows you
-to run `detectron2` within Docker container and use `Flask` written API in order to
-interact with it.
+**Detectron2 Flask API** - is a simple `Python` written repository that allows youto run `detectron2` within **Docker** container and use `Flask` written API in order to interact with it.
 
-Image, that is build in this repo works not with GPU (CUDA), but CPU, what allows you
-not to have graphic card by NVidia. More, about how everything works you will find
-in the [Documentation](#documentation) section.
+Image, that is build in this repo works not with **GPU** (**CUDA**), but **CPU**, what allows you not to have graphic card by **NVIDIA**. More, about how everything works you will find in the [Documentation](#documentation) section.
 
 ---
 
 ## Documentation
+
+The section of documentation is devided on 3 parts - [what you need](#requirements), [how you can install it](#installation) and [how you can use it](#usage).
+
+### Requirements
+
+The **API** itself works within `Docker` container build by special image. So that, the first thing you are required to have in order to use is installed `Docker` and `docker-compose`. To check that type `docker --version` and `docker-compose --version`
+
+```
+> docker --version
+Docker version 20.10.21, build baeda1f
+```
+
+```
+> docker-compose --version
+Docker Compose version v2.12.2
+```
+
+The second thing you need to have is build `.pth` trained model. More about what `.pth` means and what is used for you can read [here](https://fileinfo.com/extension/pth).
+
+>A PTH file is a machine learning model created using PyTorch, an open-source machine >learning library. It contains algorithms used to automatically perform a task, such as >pscaling or identifying an image. PTH files can be used in a variety of machine >learning and algorithm-related applications, but are most commonly used to upscale >images.
+
+### Installation
+
+### Usage
 
 ---
 

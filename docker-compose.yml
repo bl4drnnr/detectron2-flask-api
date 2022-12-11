@@ -1,0 +1,10 @@
+version: "2"
+services:
+  detectron:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:5000
+    image: slim/detectron2
+    container_name: detectron2

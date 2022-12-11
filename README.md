@@ -69,6 +69,8 @@ In order to train model in normal preiod of time (because one way or another tra
 
 The only thing you are required to do, is in **Runtime** settings **change runtime time** to GPU, *but be careful with that, since amount of resources you are allowed to use is limited. Use this method only for testing purposes.*
 
+Script and step-by-step instuction of how you can generate your own `.pth` model can be found in [this](google-colab-training-script) folder.
+
 ### Installation
 
 In order to install, using terminal, open folder where you want to save and type:
@@ -91,7 +93,8 @@ git clone https://github.com/bl4drnnr/detectron2-flask-api.git
 - Google Colab - [link](https://colab.research.google.com/)
 - Google Colab detectron2 tutorial - [link](https://colab.research.google.com/drive/16jcaJoc6bCFAQ96jDe2HwtXj7BMD_-m5)
 - Detectron2 : The bare basic end to end tutorial - [link](https://towardsdatascience.com/detectron2-the-basic-end-to-end-tutorial-5ac90e2f90e3)
-- labelme2coco official repository - [link](https://github.com/fcakyon/labelme2coco)
+- `labelme` official repository - [link](https://github.com/wkentaro/labelme)
+- `labelme2coco` official repository - [link](https://github.com/fcakyon/labelme2coco)
 
 ---
 

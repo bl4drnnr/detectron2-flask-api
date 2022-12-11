@@ -1,7 +1,11 @@
 ### Google Colab Training Script
 
+Here is the step-by-step instruction of how you can using provided script generate your own `.pth` trained model. Also, please, depending on your data pay attention to `get_traing_cfg()` function. Change those config varialbes value to make them fit your data sets.
+
+As it's been told, this project is not created for production amounts of data, but only for tests, therefore, you can not change default values of config funtion, unless you think you will get different from expected result.
+
 1. Import [this](google-colab-training-script.ipynb) script to your [Google Colab](https://colab.research.google.com/).
-2. Upload `.zip` with JSON files and sets of trainig and testing images. The structure of folder within uploaded archive should look like this:
+2. Upload `.zip` as `data.zip` with JSON files and sets of trainig and testing images. The structure of folder `data` within uploaded archive should look like this:
 ```
 ├── test
 │   ├── 1.png

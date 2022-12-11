@@ -45,10 +45,8 @@ def on_image_get_points_scores(image_path, predictor):
     outputs = predictor(im)
     scores = outputs['instances'].scores
 
-    scores_all = []
-    for i in range(len(scores)):
-        scores_all.append(scores[i].item())
-
+    scores_all = [score_item.item() for score_item in scores]
+    
     boxes_all = outputs['instances'].pred_boxes.tensor.cpu().numpy()
     return scores_all, boxes_all
 
@@ -58,8 +56,6 @@ def crop_object(image, box):
     y_top_left = box[1]
     x_bottom_right = box[2]
     y_bottom_right = box[3]
-    # x_center = (x_top_left + x_bottom_right) / 2
-    # y_center = (y_top_left + y_bottom_right) / 2
     return image.crop((int(x_top_left), int(y_top_left), int(x_bottom_right), int(y_bottom_right)))
 
 
@@ -69,26 +65,24 @@ def detect_area(image_name, threshold):
 
     cfg_pred = get_cfg()
     cfg_pred.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_101_FPN_3x.yaml"))
-    cfg_pred.MODEL.WEIGHTS = "./model_final.pth"
+    cfg_pred.MODEL.WEIGHTS = "./input/pth_model/model_final.pth"
     cfg_pred.MODEL.ROI_HEADS.NUM_CLASSES = 1
     cfg_pred.MODEL.SCORE_THRESH_TEST = input_threshold_float
+    
     predictor = DefaultPredicator(cfg_pred)
-    input_image_path = './INPUT_IMAGE.jpg'
+    input_image_path = './input/images/INPUT_IMAGE.jpg'
     on_image_draw(input_image_path, predictor)
     scores, boxes = on_image_get_points_scores(input_image_path, predictor)
-    rois = []
-    for i in range(len(scores)):
-        rois.append((
+    rois = [(
             {f'box_{i}': boxes[i].tolist()},
             {f'score_{i}': scores[i]}
-        ))
+        ) for i in range(len(scores))]
 
     example_image = cv2.imread(input_image_path)
     example_image_converted = cv2.cvtColor(example_image, cv2.COLOR_BGR2RGB)
     image_pil = Image.fromarray(example_image_converted)
 
-    for i in range(len(boxes)):
-        box = boxes[i]
+    for i, box in enumerate(boxes):
         crop_image = crop_object(image_pil, box)
         image_np = np.asarray(crop_image)
         cv2.imwrite(

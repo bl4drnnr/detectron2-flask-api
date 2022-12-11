@@ -1,1 +1,3 @@
-# detectron2-flask-api
+# Table of contents
+
+# Detectron2 Flask API

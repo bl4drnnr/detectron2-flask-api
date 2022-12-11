@@ -7,3 +7,4 @@ Dockerfile
 
 output/string_images/*
 output/images/*
+google-colab-training-script/*

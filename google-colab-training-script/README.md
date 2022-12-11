@@ -21,3 +21,6 @@ As it's been told, this project is not created for production amounts of data, b
 5. Additionaly, you can play around with functions below `main()` function to see, if everything works.
 
 *PS. After you are done with training, don't fotget to turn off `GPU` runtime mode since you are limited with `GPU` resources unless you don't have not free plan.*
+
+- [Labelme and how you can install and use it](https://github.com/wkentaro/labelme)
+- [How to convert labelme to COCO format](https://github.com/fcakyon/labelme2coco)

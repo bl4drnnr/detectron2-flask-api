@@ -1,7 +1,7 @@
 import base64
 
 
-def convert_image_to_binary(filename):
+def convert_image_to_base64(filename):
     with open(filename, "rb") as file:
         return base64.b64encode(file.read())
 

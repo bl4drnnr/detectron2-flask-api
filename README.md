@@ -42,7 +42,7 @@ Docker Compose version v2.12.2
 
 The second thing you need to have is build `.pth` trained model. More about what `.pth` means and what is used for you can read [here](https://fileinfo.com/extension/pth).
 
->A PTH file is a machine learning model created using PyTorch, an open-source machine >learning library. It contains algorithms used to automatically perform a task, such as >pscaling or identifying an image. PTH files can be used in a variety of machine >learning and algorithm-related applications, but are most commonly used to upscale >images.
+>A PTH file is a machine learning model created using PyTorch, an open-source machine learning library. It contains algorithms used to automatically perform a task, such as pscaling or identifying an image. PTH files can be used in a variety of machine learning and algorithm-related applications, but are most commonly used to upscale images.
 
 ### Installation
 

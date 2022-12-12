@@ -7,6 +7,8 @@
         2. [PTH model](#pth-model)
     2. [Installation](#installation)
     3. [Usage](#usage)
+        1. [Endpoints](#endpoints)
+        2. [Payloads](#payloads)
 3. [Contact and references](#contact-and-references)
 4. [License](#license)
 
@@ -82,6 +84,10 @@ git clone https://github.com/bl4drnnr/detectron2-flask-api.git
 ```
 
 ### Usage
+
+#### Endpoints
+
+#### Payloads
 
 ---
 

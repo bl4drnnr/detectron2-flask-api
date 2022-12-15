@@ -26,8 +26,6 @@
 
 Image, that is build in this repo works not with **GPU** (**CUDA**), but **CPU**, what allows you not to have graphic card by **NVIDIA**. More, about how everything works you will find in the [Documentation](#documentation) section.
 
----
-
 ## Documentation
 
 The section of documentation is devided on 3 parts - [what you need](#requirements), [how you can install it](#installation) and [how you can use it](#usage).
@@ -89,8 +87,6 @@ git clone https://github.com/bl4drnnr/detectron2-flask-api.git
 
 #### Payloads
 
----
-
 ## Contact and references
 
 - Developer contact - [mikhail.bahdashych@protonmail.com](mailto:mikhail.bahdashych@protonmail.com)
@@ -103,8 +99,6 @@ git clone https://github.com/bl4drnnr/detectron2-flask-api.git
 - Detectron2 : The bare basic end to end tutorial - [link](https://towardsdatascience.com/detectron2-the-basic-end-to-end-tutorial-5ac90e2f90e3)
 - `labelme` official repository - [link](https://github.com/wkentaro/labelme)
 - `labelme2coco` official repository - [link](https://github.com/fcakyon/labelme2coco)
-
----
 
 ## License
 

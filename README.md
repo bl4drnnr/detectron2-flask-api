@@ -85,6 +85,9 @@ git clone https://github.com/bl4drnnr/detectron2-flask-api.git
 
 ### Usage
 
+Depending on what endpoint you are going to use, payload for it will different.
+Below you will find list of available endpoints and payloads for them.
+
 #### Endpoints
 
 #### Payloads

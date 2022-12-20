@@ -19,7 +19,7 @@ from detectron2.utils.visualizer import Visualizer, ColorMode
 from PIL import Image
 
 from src.helpers.image_converter import *
-from src.exceptions import WrongPayload
+from src.api_responses import WrongPayload
 
 setup_logger()
 
@@ -43,15 +43,15 @@ class DetectAreaBase64(Resource):
             create_image_from_string('INPUT_IMAGE.jpg', bytes(image_string, 'utf-8'))
             detected_rois = detect_area(image_name, threshold_value)
 
-            out_image_base = convert_image_to_base64('./output/images/OUTPUT_IMAGE.jpg')
-            save_encoded_string('./output/string_images/OUTPUT_JSON_BASE.txt', out_image_base)
+            out_image_base = convert_image_to_base64('OUTPUT_IMAGE.jpg')
+            save_encoded_string('OUTPUT_JSON_BASE.txt', out_image_base)
             out_image_string = out_image_base.decode('UTF-8')
 
             out_partial_image_table = []
             for i in range(len(detected_rois)):
-                out_part_image_base = convert_image_to_base64(f'./output/images/OUTPUT_PARTIAL_IMAGE_{i}.jpg')
+                out_part_image_base = convert_image_to_base64(f'OUTPUT_PARTIAL_IMAGE_{i}.jpg')
                 
-                save_encoded_string(f'./output/string_images/OUTPUT_PARTIAL_IMAGE_JSON_BASE_{i}.txt', out_part_image_base)
+                save_encoded_string(f'OUTPUT_PARTIAL_IMAGE_JSON_BASE_{i}.txt', out_part_image_base)
 
                 out_partial_image_string = out_part_image_base.decode('UTF-8')
                 out_partial_image_table.append({f'partial_image_{i}': out_partial_image_string})
@@ -63,10 +63,10 @@ class DetectAreaBase64(Resource):
                 'output_image': out_image_string
             }
 
-            return jsonify(response)
+            return jsonify(ApiResponse(response))
 
         except WrongPayload as wp:
-            pass
+            return jsonify(wp.response)
 
 
 def on_image_draw(image_path, predictor):
@@ -115,7 +115,7 @@ def detect_area(image_name, threshold):
     cfg_pred.MODEL.SCORE_THRESH_TEST = input_threshold_float
     
     predictor = DefaultPredicator(cfg_pred)
-    input_image_path = './input/images/INPUT_IMAGE.jpg'
+    input_image_path = 'INPUT_IMAGE.jpg'
     on_image_draw(input_image_path, predictor)
     scores, boxes = on_image_get_points_scores(input_image_path, predictor)
     rois = [(

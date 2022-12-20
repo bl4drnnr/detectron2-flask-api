@@ -2,26 +2,71 @@ import os
 import sys
 import cv2
 import detectron2
-import numpy as np
 import numpy as numpy
 import matplotlib.pyplot as plt
+import requests
+import json
+import base64
 
+from flask import jsonify, request
+from flask_restful import Resource
 from pathlib import Path
 from detectron2.utils.logger import setup_logger
-setup_logger()
 from detectron2 import model_zoo
 from detectron2.engine import DefaultPredictor
 from detectron2.config import get_cfg
 from detectron2.utils.visualizer import Visualizer, ColorMode
 from PIL import Image
 
-from .image_converter import *
+from src.helpers.image_converter import *
+from src.exceptions import WrongPayload
+
+setup_logger()
+
+REQUIRED_PAYLOAD = []
 
 
-def show_image(img, cmap=None):
-    fig = plt.figure(figsize=(20, 10))
-    ax = fig.add_subplot(111)
-    ax.imshow(img, cmap=cmap)
+def check_required_payload(payload):
+    pass
+
+
+class DetectAreaBase64(Resource):
+    def post(self):
+        try:
+            posted_data = request.get_json()
+            status_code = check_required_payload(posted_data)
+
+            image_name = posted_data['image_name']
+            threshold_value = posted_data['threshold_value']
+            image_string = posted_data['image_string']
+
+            create_image_from_string('INPUT_IMAGE.jpg', bytes(image_string, 'utf-8'))
+            detected_rois = detect_area(image_name, threshold_value)
+
+            out_image_base = convert_image_to_base64('./output/images/OUTPUT_IMAGE.jpg')
+            save_encoded_string('./output/string_images/OUTPUT_JSON_BASE.txt', out_image_base)
+            out_image_string = out_image_base.decode('UTF-8')
+
+            out_partial_image_table = []
+            for i in range(len(detected_rois)):
+                out_part_image_base = convert_image_to_base64(f'./output/images/OUTPUT_PARTIAL_IMAGE_{i}.jpg')
+                
+                save_encoded_string(f'./output/string_images/OUTPUT_PARTIAL_IMAGE_JSON_BASE_{i}.txt', out_part_image_base)
+
+                out_partial_image_string = out_part_image_base.decode('UTF-8')
+                out_partial_image_table.append({f'partial_image_{i}': out_partial_image_string})
+            
+            response = {
+                'status_code': status_code,
+                'detected_bounding_boxes': detected_rois,
+                'partial_images': out_partial_image_table,
+                'output_image': out_image_string
+            }
+
+            return jsonify(response)
+
+        except WrongPayload as wp:
+            pass
 
 
 def on_image_draw(image_path, predictor):
@@ -84,7 +129,7 @@ def detect_area(image_name, threshold):
 
     for i, box in enumerate(boxes):
         crop_image = crop_object(image_pil, box)
-        image_np = np.asarray(crop_image)
+        image_np = numpy.asarray(crop_image)
         cv2.imwrite(
             f'OUTPUT_PARTIAL_IMAGE_{i}.jpg',
             cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)

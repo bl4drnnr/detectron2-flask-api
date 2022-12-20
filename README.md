@@ -86,7 +86,15 @@ git clone https://github.com/bl4drnnr/detectron2-flask-api.git
 Depending on what endpoint you are going to use, payload for it will different.
 Below you will find list of available endpoints and payloads for them.
 
+In any particular case, the very first step you need to do everytime is to put `.pth` model into `/input/pth_model` folder.
+
 #### Endpoints
+
+There are 3 endpoints available to use.
+
+1. `POST /detect-area-base64` - this endpoint receives `base64` encoded picture string. As a result, you will get another `base64` encoded string with bounded boxes and detected areas.
+2. `POST /detect-area-all` - you can put images you want to detect areas for into `/input/images` folder and trigger this endpoint. As a response you will get `base64` encodede strings with outputs in form of bounded boxes and detected areas.
+3. `POST /detect-area-by-name` - works in the same way as `POST /detect-area-all` endpoint, but the only thing you need to do is to specify image(s) you want to detect areas for.
 
 #### Payloads
 

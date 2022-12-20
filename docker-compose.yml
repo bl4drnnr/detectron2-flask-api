@@ -4,7 +4,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - EXPOSE_PORT=${EXPOSE_PORT}
+        - APPLICATION_PORT=${APPLICATION_PORT}
     ports:
-      - 8080:5000
+      - ${EXPOSE_PORT}:${APPLICATION_PORT}
     image: slim/detectron2
     container_name: detectron2

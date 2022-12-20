@@ -8,8 +8,8 @@ import requests
 import json
 import base64
 
-from flask import Flask, jsonify, request
-from flask_restful import Api, Resource
+from flask import jsonify, request
+from flask_restful import Resource
 from pathlib import Path
 from detectron2.utils.logger import setup_logger
 from detectron2 import model_zoo

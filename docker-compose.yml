@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      # args:
+      #   - EXPOSE_PORT=${EXPOSE_PORT}
     ports:
       - 8080:5000
     image: slim/detectron2

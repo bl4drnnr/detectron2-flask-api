@@ -1,3 +1,4 @@
+# ARG EXPOSE_PORT
 FROM python:3.8-slim-buster
 
 RUN apt-get update && apt-get -y install nano vim git build-essential libglib2.0-0 libsm6 libxext6 libxrender-dev python3-opencv sudo curl
@@ -22,6 +23,9 @@ RUN pip install flask-cors
 
 WORKDIR /home/detectron
 COPY . .
+
+# ARG EXPOSE_PORT
+# ENV EXPOSE_PORT=${EXPOSE_PORT}
 
 EXPOSE 8080
 

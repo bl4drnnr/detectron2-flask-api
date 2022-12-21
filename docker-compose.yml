@@ -11,3 +11,5 @@ services:
       - ${EXPOSE_PORT}:${APPLICATION_PORT}
     image: slim/detectron2
     container_name: detectron2
+    volumes:
+    - ./:/home/detectron

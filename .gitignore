@@ -2,8 +2,8 @@ __pycache__
 .idea
 .DS_Store
 
-input/images/*
-input/pth_model/*
-
-output/string_images/*
-output/images/*
+*.pth
+*.jpg
+*.jpeg
+*.png
+*.txt

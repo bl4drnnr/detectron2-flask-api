@@ -106,7 +106,7 @@ In any particular case, the very first step you need to do everytime is to put `
 There are 3 endpoints available to use.
 
 1. `POST /api/detect-area-base64` - this endpoint receives `base64` encoded picture string. As a result, you will get another `base64` encoded string with bounded boxes and detected areas.
-2. `GET /api/detect-area-all` - you can put images you want to detect areas for into `/input/images` folder and trigger this endpoint. As a response you will get `base64` encodede strings with outputs in form of bounded boxes and detected areas.
+2. `POST /api/detect-area-all` - you can put images you want to detect areas for into `/input/images` folder and trigger this endpoint. As a response you will get `base64` encodede strings with outputs in form of bounded boxes and detected areas.
 3. `POST /api/detect-area-by-name` - works in the same way as `POST /detect-area-all` endpoint, but the only thing you need to do is to specify image(s) you want to detect areas for.
 
 #### Payloads
@@ -122,7 +122,12 @@ All payloads have JSON format. As a value of every required value will be provid
         "input_image_name" : "str"
     }
     ```
-2. Endpoint `GET /api/detect-area-all` doesn't require any payload. The only thing that should be done before usage of this endpoint is that `model_final.pth` model should be placed in `/input/pth_model` folder and pictures for processing should be placed in `/input/images` folder.
+2. Endpoint `POST /api/detect-area-all` requires only `threshold_value`. The only thing that should be done before usage of this endpoint is that `model_final.pth` model should be placed in `/input/pth_model` folder and pictures for processing should be placed in `/input/images` folder.
+    ```json
+    {
+        "threshold_value": "number"
+    }
+    ```
 3. For the `POST /api/detect-area-by-name` enpodint required payload looks next:
     ```json
     {

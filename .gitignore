@@ -3,7 +3,6 @@ __pycache__
 .DS_Store
 
 *.pth
-*.jpg
-*.jpeg
-*.png
 *.txt
+input/images/*
+output/images/*

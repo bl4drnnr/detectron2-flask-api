@@ -9,6 +9,7 @@
     3. [Usage](#usage)
         1. [Endpoints](#endpoints)
         2. [Payloads](#payloads)
+    4. [Example of usage](#example-of-usage)
 3. [Contact and references](#contact-and-references)
 4. [License](#license)
 
@@ -50,7 +51,7 @@ Docker Compose version v2.12.2
 
 #### PTH model
 
-The second thing you need to have is build `.pth` trained model. More about what `.pth` means and what is used for you can read [here](https://fileinfo.com/extension/pth).
+The second thing you need to have is build `model_final.pth` trained model. More about what `model_final.pth` means and what is used for you can read [here](https://fileinfo.com/extension/pth).
 
 >A PTH file is a machine learning model created using PyTorch, an open-source machine learning library. It contains algorithms used to automatically perform a task, such as pscaling or identifying an image. PTH files can be used in a variety of machine learning and algorithm-related applications, but are most commonly used to upscale images.
 
@@ -73,7 +74,7 @@ In order to train model in normal preiod of time (because one way or another tra
 
 The only thing you are required to do, is in **Runtime** settings **change runtime time** to GPU, *but be careful with that, since amount of resources you are allowed to use is limited. Use this method only for testing purposes.*
 
-Script and step-by-step instuction of how you can generate your own `.pth` model can be found in [this](google-colab-training-script) folder.
+Script and step-by-step instuction of how you can generate your own `model_final.pth` model can be found in [this](google-colab-training-script) folder.
 
 ### Installation
 
@@ -83,22 +84,74 @@ In order to install, using terminal, open folder where you want to save and type
 git clone https://github.com/bl4drnnr/detectron2-flask-api.git
 ```
 
+In order to use application, what you need to do is to put `model_final.pth` in `/input/pth_model` folder and input files in `/input/images` folder. Actually, both steps are optional since the folder within containder is mapped with your local folder. Therefore, you can build your own image and conteiner first and only then put model and files.
+
+In order to build image using `docker-compose` in the root of the project type:
+
+```
+EXPOSE_PORT=8080 APPLICATION_PORT=5000 docker-compose up --build -d
+```
+
+The value of the variable `EXPOSE_PORT` is the port on which application will be available on the host machine. Setting value of `APPLICATION_PORT` variable is optional since it's port on which application works within container and it's not exposed.
+
+Also, flag `-d` is also optional. It allows to start container in detach mode, what allows you to use termainl command prompt right after start.
+
 ### Usage
 
 Depending on what endpoint you are going to use, payload for it will different.
 Below you will find list of available endpoints and payloads for them.
 
-In any particular case, the very first step you need to do everytime is to put `.pth` model into `/input/pth_model` folder.
+In any particular case, the very first step you need to do everytime is to put `model_final.pth` model into `/input/pth_model` folder.
 
 #### Endpoints
 
 There are 3 endpoints available to use.
 
-1. `POST /detect-area-base64` - this endpoint receives `base64` encoded picture string. As a result, you will get another `base64` encoded string with bounded boxes and detected areas.
-2. `POST /detect-area-all` - you can put images you want to detect areas for into `/input/images` folder and trigger this endpoint. As a response you will get `base64` encodede strings with outputs in form of bounded boxes and detected areas.
-3. `POST /detect-area-by-name` - works in the same way as `POST /detect-area-all` endpoint, but the only thing you need to do is to specify image(s) you want to detect areas for.
+1. `POST /api/detect-area-base64` - this endpoint receives `base64` encoded picture string. As a result, you will get another `base64` encoded string with bounded boxes and detected areas.
+2. `GET /api/detect-area-all` - you can put images you want to detect areas for into `/input/images` folder and trigger this endpoint. As a response you will get `base64` encodede strings with outputs in form of bounded boxes and detected areas.
+3. `POST /api/detect-area-by-name` - works in the same way as `POST /detect-area-all` endpoint, but the only thing you need to do is to specify image(s) you want to detect areas for.
 
 #### Payloads
+
+All payloads have JSON format. As a value of every required value will be provided data type of what should be put for this particular value.
+
+1. For the `POST /api/detect-area-base64` endpoint required payload looks next:
+    ```json
+    {
+        "threshold_value": "number",
+        "image_string": "base64_str",
+        "output_image_name": "str",
+        "input_image_name" : "str"
+    }
+    ```
+2. Endpoint `GET /api/detect-area-all` doesn't require any payload. The only thing that should be done before usage of this endpoint is that `model_final.pth` model should be placed in `/input/pth_model` folder and pictures for processing should be placed in `/input/images` folder.
+3. For the `POST /api/detect-area-by-name` enpodint required payload looks next:
+    ```json
+    {
+        "image_names": "array_of_pictures_names"
+    }
+    ```
+
+### Example of usage
+
+Let's say we have trained model that is able to recognize people in masks on photo.
+What we can do is to take some picture, convert it to `base64` format and then send this picture on `POST /api/detect-area-base64` endpoint. For the purpose of help, you can use `convert_image_to_base64.py` script in root of the project.
+
+Here is how picture in its normal `.png` format:
+
+![0](media/0.png)
+
+
+Then, we convert it to `base64` and the required payload will be looking like this:
+
+```json
+{
+    "input_image_name": "my_input_image.png",
+    "output_image_name": "my_output_image.png",
+    "threshold_value": 0.5,
+    "image_string": "iVBORw0KGgoAAAANSUhEUgAAAZAAAAEhEAYAAAABuSpfAAAMTmlDQ1BJQ0MgUHJvZmlsZQAASImVVwdYU8kWnltSSWiBUKSE3kQRBAJICaFFEJAqiEpIAgklxoSgYmcRFVy7iIINXRVRdC2ArBV1rYtidy2LBZWVdXEVGypvUkDXfeV75..."
+}
+```
 
 ---
 

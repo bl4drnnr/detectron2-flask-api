@@ -1,12 +1,10 @@
 from flask import request
 from flask_restful import Resource
-from detectron2.utils.logger import setup_logger
 
 from src.helpers.image_converter import *
 from src.helpers.common import *
 from src.api_responses import *
 
-setup_logger()
 
 REQUIRED_PAYLOAD = [
     'threshold_value',
@@ -19,13 +17,13 @@ REQUIRED_PAYLOAD = [
 class DetectAreaBase64(Resource):
     def post(self):
         try:
-            posted_data = request.get_json()
-            status_code = check_required_payload(posted_data, REQUIRED_PAYLOAD)
+            payload = request.get_json()
+            check_required_payload(payload, REQUIRED_PAYLOAD)
 
-            threshold_value = posted_data['threshold_value']
-            image_string = posted_data['image_string']
-            input_image_name = f"./input/images/{posted_data['input_image_name']}"
-            output_image_name = f"./output/images/{posted_data['output_image_name']}"
+            threshold_value = payload['threshold_value']
+            image_string = payload['image_string']
+            input_image_name = f"./input/images/{payload['input_image_name']}"
+            output_image_name = f"./output/images/{payload['output_image_name']}"
 
             create_image_from_string(input_image_name, bytes(image_string, 'utf-8'))
             detected_rois = detect_area(input_image_name, output_image_name, threshold_value)

@@ -139,7 +139,6 @@ Here is how picture in its normal `.png` format:
 
 ![0](media/0.png)
 
-
 Then, we convert it to `base64` and the required payload will be looking like this:
 
 ```json
@@ -150,6 +149,91 @@ Then, we convert it to `base64` and the required payload will be looking like th
     "image_string": "iVBORw0KGgoAAAANSUhEUgAAAZAAAAEhEAYAAAABuSpfAAAMTmlDQ1BJQ0MgUHJvZmlsZQAASImVVwdYU8kWnltSSWiBUKSE3kQRBAJICaFFEJAqiEpIAgklxoSgYmcRFVy7iIINXRVRdC2ArBV1rYtidy2LBZWVdXEVGypvUkDXfeV75..."
 }
 ```
+
+As a result you will get next JSON response:
+
+```json
+{
+    "data": {
+        "detected_bounding_boxes": [
+            [
+                {
+                    "box_0": [
+                        133.08290100097656,
+                        52.93942642211914,
+                        152.4962158203125,
+                        71.01234436035156
+                    ]
+                },
+                {
+                    "score_0": 0.9737352132797241
+                }
+            ],
+            [
+                {
+                    "box_1": [
+                        55.689701080322266,
+                        99.22406005859375,
+                        81.0321044921875,
+                        118.78961944580078
+                    ]
+                },
+                {
+                    "score_1": 0.9538251757621765
+                }
+            ],
+            [
+                {
+                    "box_2": [
+                        242.28228759765625,
+                        104.80382537841797,
+                        266.742919921875,
+                        125.33007049560547
+                    ]
+                },
+                {
+                    "score_2": 0.8988789319992065
+                }
+            ],
+            [
+                {
+                    "box_3": [
+                        282.64892578125,
+                        21.308473587036133,
+                        324.9275817871094,
+                        37.22532653808594
+                    ]
+                },
+                {
+                    "score_3": 0.09363771229982376
+                }
+            ]
+        ],
+        "output_image": "iVBORw0KGgoAAAANSUhEUgAAARgAAADKCAIAAADxbchLAAAgAElEQVR4AZTBeaxe930m9uf5...",
+        "partial_images": [
+            {
+                "partial_image_0": "/9j/4AAQSkZJRgABAQAAAQABAAD..."
+            }, 
+            {
+                "partial_image_1": "/9j/4AAQSkZJRgABAQAAAQABAAD..."
+            }, 
+            {
+                "partial_image_2": "/9j/4AAQSkZJRgABAQAAAQABAAD..."
+            }, 
+            {
+                "partial_image_3": "/9j/4AAQSkZJRgABAQAAAQABAAD..."
+            }
+        ]
+    },
+    "status_code": 200
+}
+```
+
+Also, in `input/images` folder you will find file with name you provided in `input_image_name` field converted to file (`my_input_images.png` in this particular case). Then, in `output/images` folder you will find file with name you provided in `ouput_image_name` field converted to file (`my_output_image.png` in this particular case), but with **bonded boxes**.
+
+![1](media/1.png)
+
+Moreover, in `output/images` folder you will find crapped every element of the object detected on the image. It has `OUTPUT_PARTIAL_IMAGE_{index}.jpg`. Index just shows the number of detected object. In this particular case there were 4. Also, in `output/string_images` you will find the same images (output images with bounded boxes and crapped elements) but in `base64` format.
 
 ## Contact and references
 

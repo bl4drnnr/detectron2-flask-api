@@ -1,5 +1,5 @@
 import base64
-from src.image_converter import *
+from src.helpers.image_converter import *
 
 """
 Step 1 - convertion of an imange to base64 encoded string

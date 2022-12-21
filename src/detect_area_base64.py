@@ -19,7 +19,7 @@ from detectron2.utils.visualizer import Visualizer, ColorMode
 from PIL import Image
 
 from src.helpers.image_converter import *
-from src.api_responses import WrongPayload
+from src.api_responses import *
 
 setup_logger()
 
@@ -63,7 +63,7 @@ class DetectAreaBase64(Resource):
                 'output_image': out_image_string
             }
 
-            return jsonify(ApiResponse(response))
+            return jsonify(response)
 
         except WrongPayload as wp:
             return jsonify(wp.response)
@@ -113,8 +113,9 @@ def detect_area(image_name, threshold):
     cfg_pred.MODEL.WEIGHTS = "./input/pth_model/model_final.pth"
     cfg_pred.MODEL.ROI_HEADS.NUM_CLASSES = 1
     cfg_pred.MODEL.SCORE_THRESH_TEST = input_threshold_float
+    cfg_pred.MODEL.DEVICE = "cpu"
     
-    predictor = DefaultPredicator(cfg_pred)
+    predictor = DefaultPredictor(cfg_pred)
     input_image_path = 'INPUT_IMAGE.jpg'
     on_image_draw(input_image_path, predictor)
     scores, boxes = on_image_get_points_scores(input_image_path, predictor)

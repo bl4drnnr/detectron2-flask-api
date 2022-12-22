@@ -76,8 +76,9 @@ def detect_area(input_image_name, output_image_name, threshold):
     for i, box in enumerate(boxes):
         crop_image = crop_object(image_pil, box)
         image_np = numpy.asarray(crop_image)
+        image_index = output_image_name.split('/')[-1].split('.')[0]
         cv2.imwrite(
-            f'./output/images/OUTPUT_PARTIAL_IMAGE_{i}.jpg',
+            f'./output/images/OUTPUT_PARTIAL_IMAGE_{image_index}_{i}.jpg',
             cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
         )
     return rois

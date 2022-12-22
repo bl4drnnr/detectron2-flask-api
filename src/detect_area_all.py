@@ -32,7 +32,7 @@ class DetectAreaAll(Resource):
                 detected_rois = detect_area(input_image_name, output_image_name, threshold_value)
 
                 out_image_base = convert_image_to_base64(output_image_name)
-                save_encoded_string(f'./output/string_images/OUTPUT_JSON_BASE_{file_name.split(".")[0]}.txt', out_image_base)
+                save_encoded_string(f'./output/string_images/OUTPUT_BASE_{file_name.split(".")[0]}.txt', out_image_base)
                 out_image_string = out_image_base.decode('UTF-8')
 
                 out_partial_image_table = []
@@ -42,7 +42,7 @@ class DetectAreaAll(Resource):
                     )
                     
                     save_encoded_string(
-                        f'./output/string_images/OUTPUT_PARTIAL_IMAGE_JSON_BASE_{file_name.split(".")[0]}_{i}.txt', 
+                        f'./output/string_images/OUTPUT_PARTIAL_IMAGE_BASE_{file_name.split(".")[0]}_{i}.txt', 
                         out_part_image_base
                     )
 
